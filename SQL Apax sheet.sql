@@ -119,6 +119,80 @@ SELECT round(58.6382, 2) FROM dual;
 SELECT to_char(4567.45, '$99999.99') from DUAL;
 -- 000567.77
 SELECT to_char(567.77, '000000.00') FROM dual;
+#
+#
+#
+#
+####EOF
+
+
+
+
+SELECT * FROM emp;
+
+SELECT * FROM dept;
+
+
+SELECT sysdate FROM dual;
+
+-- adding months to a date added 12 moths 03/09/2025
+SELECT add_months('03-09-2024', 12) FROM dual;
+-- 05/09/2025
+SELECT add_months('03-09-2024', 14) FROM dual;
+
+-- formating date to day month year
+
+SELECT to_char(add_months(sysdate, 9), 'dd-mm-yyyy') FROM dual
+
+
+-- time stam shows both date and time
+-- 09-MAR-24 02.20.37.792900 AM +00:00
+SELECT systimestamp FROM dual;
+
+--  you can aslo trunck the data to get just the date 03/09/2024
+SELECT trunc(sysTimeStamp) AS "truncDateTimeStamp" FROM dual;
+
+
+
+--  shows the first moth of the input date 03/01/2024
+SELECT trunc(sysTimeStamp, 'MONTH') FROM dual;
+
+-- 01/01/2024 start of the year as per given date 
+SELECT trunc(sysTimeStamp, 'YEAR') FROM dual;
+
+
+-- you can aso formate the date in a stylish way
+-- 09th of march --and the year is: 2024
+SELECT to_char(systimestamp, 'ddth "of" month "--and the year is: " yyyy') FROM dual;
+
+-- convert a string to a date  07/21/1998
+CREATE VIEW date_oops AS SELECT to_date('21-07-1998', 'dd,mm,yyyy') AS "CON_DATE" FROM dual;
+-- now we can perform date operations on it 
+--  before trunc 07/21/1998 after 07/01/1998
+SELECT trunc(CON_DATE, 'MONTH') from date_oops;
+
+-- -313.41935483870967741935483870967741936 small - big
+SELECT months_between((SELECT CON_DATE FROM date_oops), to_char(trunc(systimestamp),'dd-mm-yyyy'))FROM dual;
+
+--313.419354838709677419354838709677419355
+SELECT months_between(to_char(trunc(systimestamp),'dd-mm-yyyy'), (SELECT CON_DATE FROM date_oops))FROM dual;
+
+---- big - small 313 also use to date to format a date to compute
+SELECT trunc(months_between(to_date(trunc(systimestamp),'dd-mm-yyyy'), (SELECT CON_DATE FROM date_oops))) FROM dual;
+
+
+SELECT '07-21-2024' FROM dual;
+
+-- big - small 4 you can also comput with a string date
+SELECT trunc(months_between('07-21-2024',trunc(systimestamp))) FROM dual;
+#
+#
+#
+#
+#EOF
+
+
+
 
 
 
