@@ -191,6 +191,101 @@ SELECT trunc(months_between('07-21-2024',trunc(systimestamp))) FROM dual;
 #
 #EOF
 
+#10-03-2025
+#
+#
+#
+-- group by
+
+SELECT * FROM emp;
+
+SELECT * FROM dept;
+
+
+-- sum up salary per job role
+SELECT e.job, SUM(e.sal) FROM emp e
+GROUP BY e.job;
+
+
+-- individual salarys per person and job role then sum up per job role and name
+SELECT NVL(e.ename, '-----TOTAL-----'), e.job, SUM(e.sal)
+FROM emp e GROUP BY ROLLUP(e.job, e.ename);
+
+-- or with all the padding
+SELECT NVL(e.ename, RPAD(LPAD('TOTAL',20,'-'),40,'-')), e.job, SUM(e.sal)
+FROM emp e GROUP BY ROLLUP(e.job, e.ename);
+
+--  group by job title order by sal asc top to bottom 4150 -> 8275
+SELECT e.job, sum(e.sal) AS "TOTAL"
+FROM emp e GROUP BY e.job ORDER BY TOTAL ASC;
+
+-- group by desc top to bottom 8275 -> 4150
+SELECT e.job, SUM(e.sal) AS "TOTAL"
+FROM emp e GROUP BY e.job ORDER BY TOTAL DESC;
+
+
+-- group by with condition having must come immediately after group by
+SELECT e.job, SUM(e.sal) AS "TOTAL"
+FROM emp e GROUP BY e.job HAVING SUM(e.sal) > 4900
+ORDER BY TOTAL DESC;
+
+-- can also use nested query does the same as above
+SELECT * FROM(
+SELECT e.job, SUM(e.sal) AS "TOTAL"
+FROM emp e GROUP BY e.job ORDER BY TOTAL DESC
+) WHERE TOTAL > 4900;
+
+
+-- JOIN LJOIN RIGHT FULL-OUTER-JOIN INNER-JOIN 
+
+-- most basic join kind of like a full join
+SELECT * FROM emp, dept
+WHERE emp.deptno = dept.deptno;
+
+
+-- puting conditions for the above
+SELECT * FROM emp, dept
+WHERE emp.deptno = dept.deptno
+AND emp.sal > 4999;
+
+
+--Inner Join
+SELECT * FROM emp e
+INNER JOIN dept d 
+ON e.deptno = d.deptno;
+
+
+-- Full Join
+SELECT * FROM emp e
+FULL OUTER JOIN dept d
+ON e.deptno = d.deptno
+
+-- Left Join here every employe is in a dipartment if not right table will have a null association
+SELECT * FROM emp e
+LEFT OUTER JOIN dept d
+ON e.deptno = d.deptno;
+
+
+--Right join depat doesnt have a employee thats why bosten has a null association
+SELECT * FROM emp e
+RIGHT OUTER JOIN dept d
+ON e.deptno = d.deptno;
+#
+#
+#
+###EOF
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
