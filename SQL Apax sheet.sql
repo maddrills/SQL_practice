@@ -274,6 +274,71 @@ ON e.deptno = d.deptno;
 #
 #
 ###EOF
+#
+#
+#
+#
+
+SELECT * FROM emp;
+
+SELECT * FROM dept;
+
+-- select manager
+SELECT e.ename, NVL(e.mgr, 0) FROM emp e
+WHERE e.mgr IS NULL;
+
+
+-- group by with rollup 
+SELECT NVL(e.ename, '-----TOTAL-----'), e.job, SUM(e.sal)
+FROM emp e GROUP BY ROLLUP(e.job, e.ename);
+
+
+--  employees with a manager
+SELECT * FROM emp e 
+WHERE e.mgr IS NOT NULL;  
+
+
+-- self join employes with reporting to King
+SELECT * FROM emp e
+WHERE e.mgr 
+= (SELECT en.empno FROM emp en WHERE en.mgr IS NULL);
+
+
+--self join where emp reports to managers
+SELECT emp.* FROM emp WHERE emp.mgr IN(
+SELECT e.empno FROM emp e WHERE e.job = 'MANAGER');
+
+
+--self join where employes have othere employes id as there manager row
+SELECT emp.* FROM emp WHERE emp.mgr IN (
+SELECT e.empno FROM emp e);
+
+-- also a litterel prefered self join notice how king is not in o/p
+SELECT e.ename, e.job FROM emp e 
+INNER JOIN emp en
+ON e.mgr = en.empno;
+#
+#
+#
+#
+#EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
