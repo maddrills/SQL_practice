@@ -322,6 +322,64 @@ ON e.mgr = en.empno;
 #
 #
 #EOF
+--table create and auto increment
+-- creating a student db
+
+
+
+
+CREATE TABLE student(
+    student_id int,
+    name varchar(60),
+    age number,
+    constraint student_primary_key_constraint PRIMARY KEY(student_id)
+);
+
+CREATE TABLE teacher(
+    teacher_id int,
+    name varchar(65),
+    age number,
+    constraint teacher_primary_key_constraint PRIMARY KEY(teacher_id)
+);
+
+CREATE TABLE student_teacher(
+    student_id int ,
+    teacher_id int ,
+    CONSTRAINT student_teacher_primary_key_constraint PRIMARY KEY(student_id, teacher_id),
+    CONSTRAINT student_foreign_key_constraint FOREIGN KEY(student_id) REFERENCES student(student_id) ON DELETE CASCADE,
+    CONSTRAINT teacher_foreign_key_constraint FOREIGN KEY(teacher_id) REFERENCES teacher(teacher_id) ON DELETE CASCADE,
+);
+
+
+DROP TABLE student_teacher;
+DROP TABLE teacher;
+-- drops constraints int the referncing table then delets itself
+DROP TABLE student CASCADE CONSTRAINT;
+
+
+-- autoincrement  cache first 20 values for student
+CREATE SEQUENCE product_seq
+MINVALUE 1
+MAXVALUE 9999999999
+START WITH 1
+INCREMENT BY 1
+CACHE 20;
+
+-- create sequence for teacher
+CREATE SEQUENCE teacher_seq
+MINVALUE 1
+MAXVALUE 9999999999
+START WITH 1
+INCREMENT BY 1
+CACHE 20;
+
+INSERT INTO student(student_id, name, age) VALUES(product_seq.NEXTVAL, 'Mathew', 25);
+INSERT INTO student(student_id, name, age) VALUES(product_seq.NEXTVAL, 'george', 27);
+INSERT INTO student(student_id, name, age) VALUES(product_seq.NEXTVAL, 'Violet', 23);
+#
+#
+#
+#
 
 
 
