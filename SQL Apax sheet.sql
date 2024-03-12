@@ -380,6 +380,109 @@ INSERT INTO student(student_id, name, age) VALUES(product_seq.NEXTVAL, 'Violet',
 #
 #
 #
+###
+12-03-2024
+SELECT * FROM emp;
+
+SELECT *FROM dept;
+
+
+-- job_grade shoud hold data of salarys
+
+CREATE VIEW sal_range AS
+SELECT MAX(e.sal) AS "MAXI", MIN(e.sal) AS "MINI"
+FROM emp e
+GROUP BY e.job;
+
+DROP VIEW sal_range;
+
+
+SELECT * FROM job_grade;
+
+-- makes no sense using this 
+SELECT e.ename, e.sal FROM emp e 
+JOIN sal_range s
+ON e.sal BETWEEN s.MAXI AND s.MINI
+
+
+
+SELECT * FROM sal_range; 
+
+
+CREATE TABLE grader_sal(
+    grade char(1),
+    min_sal number,
+    max_sal number
+);
+
+
+INSERT INTO grader_sal VALUES ('E', 0 , 1000);
+INSERT INTO grader_sal VALUES ('D', 1001 , 2000);
+INSERT INTO grader_sal VALUES ('C', 2001 , 3000);
+INSERT INTO grader_sal VALUES ('B', 3001 , 4000);
+INSERT INTO grader_sal VALUES ('A', 4001 , 5000);
+
+
+SELECT * FROM grader_sal;
+
+DROP TABLE grader_sal;
+
+CREATE VIEW grade_this AS select * from grader_sal ORDER BY grade;
+
+
+-- this grades all the salaries below is a non eque join
+SELECT e.ename, e.sal, g.grade 
+FROM emp e
+JOIN grader_sal g 
+ON e.sal BETWEEN g.min_sal AND g.max_sal
+ORDER BY g.grade;
+
+
+-- casting o/p 3 can be applyed on date time etc to get output 
+SELECT CAST(3.14159265 AS int) FROM dual; 
+
+-- nicelly formated
+SELECT to_char(CAST(3.14159265 AS int), '$9999999999') pi_doler FROM dual;
+
+
+-- without row condition
+SELECT e.ename, e.sal,
+CASE
+WHEN e.sal BETWEEN 4000 AND 5000 THEN 'waaaw nice'
+WHEN e.sal BETWEEN 3000 AND 4999 THEN 'not bad not bad'
+ELSE 'Shit nooooo'
+END sal_grade
+FROM emp e ORDER BY e.sal DESC;
+
+
+-- without an else statement works but for values not in the range sal_grade will be null
+SELECT e.ename, e.sal,
+CASE
+WHEN e.sal BETWEEN 4000 AND 5000 THEN 'waaaw nice'
+WHEN e.sal BETWEEN 3000 AND 4999 THEN 'not bad not bad'
+-- ELSE 'Shit nooooo'
+END sal_grade
+FROM emp e ORDER BY e.sal DESC;
+
+
+
+-- conditional statement with row lim condition
+SELECT e.ename, e.sal,
+CASE
+WHEN e.sal BETWEEN 4000 AND 5000 THEN 'waaaw nice'
+WHEN e.sal BETWEEN 3000 AND 4999 THEN 'not bad not bad'
+ELSE 'Shit nooooo'
+END sal_grade
+FROM emp e 
+WHERE rownum < 10 ORDER BY e.sal DESC;
+#
+#
+#
+#
+#
+###
+
+
 
 
 
