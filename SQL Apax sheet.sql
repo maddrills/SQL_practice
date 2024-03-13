@@ -1,4 +1,4 @@
-#01-03-2024
+--01-03-2024
 SELECT * FROM emp;
 
 SELECT * FROM dept WHERE rownum < 10;
@@ -17,13 +17,13 @@ HAVING  SUM(e.sal) > 5000;
 SELECT * FROM (
 SELECT e.job, e.sal AS "SAL"
 FROM emp e) WHERE SAL > 500;
-#
-#
-#01-03-2024
-#EOF
+--
+--
+--01-03-2024
+--EOF
 
 
-#02-03-2024
+--02-03-2024
 SELECT * FROM emp;
 
 SELECT * FROM emp e
@@ -33,17 +33,17 @@ AND e.sal BETWEEN 3000 AND 10000;
 SELECT * FROM emp ORDER BY sal ASC;
 
 SELECT * FROM emp ORDER BY sal,comm ASC;
-#
-#
-#02-03-2024
-#EOF
+--
+--
+--02-03-2024
+--EOF
 
 
 
 
 
 
-#08-03-2024
+--08-03-2024
 
 SELECT * FROM emp;
 
@@ -119,11 +119,11 @@ SELECT round(58.6382, 2) FROM dual;
 SELECT to_char(4567.45, '$99999.99') from DUAL;
 -- 000567.77
 SELECT to_char(567.77, '000000.00') FROM dual;
-#
-#
-#
-#
-####EOF
+--
+--
+--
+--
+---EOF
 
 
 
@@ -185,16 +185,17 @@ SELECT '07-21-2024' FROM dual;
 
 -- big - small 4 you can also comput with a string date
 SELECT trunc(months_between('07-21-2024',trunc(systimestamp))) FROM dual;
-#
-#
-#
-#
-#EOF
+--
+--
+--
+--
+--
+--EOF
 
-#10-03-2025
-#
-#
-#
+--10-03-2025
+--
+--
+--
 -- group by
 
 SELECT * FROM emp;
@@ -270,14 +271,15 @@ ON e.deptno = d.deptno;
 SELECT * FROM emp e
 RIGHT OUTER JOIN dept d
 ON e.deptno = d.deptno;
-#
-#
-#
-###EOF
-#
-#
-#
-#
+--
+--
+--
+--
+--EOF
+--
+--
+--
+--
 
 SELECT * FROM emp;
 
@@ -317,11 +319,13 @@ SELECT e.empno FROM emp e);
 SELECT e.ename, e.job FROM emp e 
 INNER JOIN emp en
 ON e.mgr = en.empno;
-#
-#
-#
-#
-#EOF
+--
+--
+--
+--
+--
+--
+--EOF
 --table create and auto increment
 -- creating a student db
 
@@ -376,11 +380,12 @@ CACHE 20;
 INSERT INTO student(student_id, name, age) VALUES(product_seq.NEXTVAL, 'Mathew', 25);
 INSERT INTO student(student_id, name, age) VALUES(product_seq.NEXTVAL, 'george', 27);
 INSERT INTO student(student_id, name, age) VALUES(product_seq.NEXTVAL, 'Violet', 23);
-#
-#
-#
-#
-###
+--
+--
+--
+--
+--
+--
 12-03-2024
 SELECT * FROM emp;
 
@@ -475,12 +480,12 @@ ELSE 'Shit nooooo'
 END sal_grade
 FROM emp e 
 WHERE rownum < 10 ORDER BY e.sal DESC;
-#
-#
-#
-#
-#
-###
+--
+--
+--
+--
+--
+----
 -- 
 -- 
 -- 
