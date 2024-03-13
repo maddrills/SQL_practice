@@ -481,6 +481,42 @@ WHERE rownum < 10 ORDER BY e.sal DESC;
 #
 #
 ###
+-- 
+-- 
+-- 
+-- 
+-- 
+--  window function
+SELECT * FROM emp;
+
+SELECT * FROM dept;
+
+-- shows the min salary in the entire table
+SELECT e.ename, e.sal, e.job, (min(e.sal) OVER()) AS "MIN_SAL" 
+FROM emp e;
+
+-- now if you want to show the min sal by department use partition in the over clouse
+-- acts like a group by and rollup but on a row
+SELECT  e.ename, e.sal, e.job, (min(e.sal) OVER(PARTITION BY e.job)) AS "MIN_SAL"
+FROM emp e ORDER BY MIN_SAL;
+
+-- this gives a sum per person and department and the grand total for respective dipartment
+SELECT  e.ename, e.job, SUM(e.sal)
+FROM emp e GROUP BY ROLLUP (e.job, e.ename);
+
+-- select the frequency of number of people per dipt
+SELECT DISTINCT e.job, (count(*) OVER(PARTITION BY(e.job))) AS "NUM_JOB"
+FROM emp e ORDER BY NUM_JOB;
+-- 
+-- 
+-- 
+-- 
+-- 
+-- 
+
+
+
+
 
 
 
