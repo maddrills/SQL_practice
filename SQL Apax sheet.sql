@@ -519,6 +519,70 @@ FROM emp e ORDER BY NUM_JOB;
 -- 
 -- 
 
+-- 
+-- 
+
+-- creating a windows over a subset of data
+-- 
+-- 
+
+SELECT * FROM emp;
+
+SELECT * FROM dept;
+
+
+SELECT e.*, MAX(e.sal) OVER(PARTITION BY e.job)
+FROM emp e;
+
+
+
+
+SELECT e.*, MIN(e.sal) OVER(PARTITION BY e.job)
+FROM emp e;
+
+
+-- min max by job title
+SELECT e.*, MIN(e.sal) OVER(PARTITION BY e.job), MAX(e.sal) OVER(PARTITION BY e.job)
+FROM emp e;
+
+
+
+-- takes the sal at the current row and sums it up with the previos row
+-- here you are saying count 
+-- if same value occures it shows the number of times it colided
+SELECT e.deptno, e.sal, count(e.sal) OVER(ORDER BY e.sal)
+FROM emp e;
+
+
+-- and partition by dipartment 
+-- shows the count of salery per job roll
+
+SELECT e.deptno,e.job, e.sal, count(e.sal) OVER(PARTITION BY e.job ORDER BY e.sal)
+FROM emp e ORDER BY e.job;
+--
+--
+--
+--
+-- RANK
+-- always remeber
+-- to rank something it needs to be ordered 
+-- rank can only be used with an over clouse
+-- below query ranks sal according to deparment 
+SELECT e.ename,e.deptno,e.job, e.sal, RANK() OVER(PARTITION BY e.job ORDER BY e.sal DESC)
+FROM emp e ORDER BY e.job;
+
+-- same query without partition 
+SELECT e.ename,e.deptno,e.job, e.sal, RANK() OVER(ORDER BY e.sal DESC) AS "SAL_RANK_FULL_TABLE"
+FROM emp e ORDER BY SAL_RANL_FULL_TABLE;
+
+-- dense rank wont skip a number if clisions occure
+SELECT e.ename,e.deptno,e.job, e.sal, DENSE_RANK() OVER(ORDER BY e.sal DESC) AS "SAL_RANK_FULL_TABLE"
+FROM emp e ORDER BY SAL_RANK_FULL_TABLE;
+
+
+-- this one will be weard because its comparing it in an asending maner so highest salary will have a high number lowest will have 1
+SELECT e.ename,e.deptno,e.job, e.sal, DENSE_RANK() OVER(ORDER BY e.sal) AS "SAL_RANK_FULL_TABLE"
+FROM emp e ORDER BY SAL_RANK_FULL_TABLE;
 
 
 
